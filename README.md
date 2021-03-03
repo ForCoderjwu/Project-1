@@ -10,7 +10,7 @@ and clickable buttom.
 
 ### Technical Details
 
--Using the timer to build the progress bar (Base on the Timer/progressbar practice)
--Using the clickable buttom to build the navigation bar
--Using the 1/2 button to change students
--More function...
+-Using the timer to build the progress bar (Base on the Timer/progressbar practice)  
+-Using the clickable buttom to build the navigation bar  
+-Using the 1/2 button to change students  
+-More function...  
