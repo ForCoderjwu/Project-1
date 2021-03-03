@@ -22,9 +22,10 @@ var studentschedule = [];
 var studentgrade = [];
 
 function setup() {
-  newTimer = new Timer(5000);
-  drawfunction = makeHome;
+  newTimer = new Timer(5000); //Timer 5s
+  drawfunction = makeHome;//Initial the home page
 
+  //Make up the Button
   textButton[0] = makeTextButton("Home", 20, buttonY);
   textButton[1] = makeTextButton("Personal Information", 20 + 200*1, buttonY);
   textButton[2] = makeTextButton("Class Schedule", 20 + 200*2, buttonY);
@@ -33,7 +34,10 @@ function setup() {
   currentstu = 0;
   stringinput();
 
-  createCanvas(windowWidth, windowHeight);
+  //Using the user's windows width/height, but at least is 1100*750
+  if (windowWidth <1100 || windowHeight < 750) createCanvas(1100, 750);
+  else createCanvas(windowWidth, windowHeight);
+  
   background(0);
   newTimer.start();
 }
@@ -46,10 +50,10 @@ function draw() {
     drawfunction();
     drawButtons();
   }
-  drawDebugInfo();
+  //drawDebugInfo();
 }
 
-function drawDebugInfo() {
+function drawDebugInfo() { //Optinal
   push();
   textSize(24);
   textAlign(LEFT);
@@ -64,9 +68,11 @@ function stringinput() {
   studentprofile[0] = ["John", 16, "Male","Sophomore", 13786522, "FALL 2019", loadImage("asset/png1.png")];
   studentprofile[1] = ["Charle", 17, "Male","Junior", 19745628, "FALL 2018", loadImage("asset/bean.png")];
 
+  //Student's schedule setup
   studentschedule[0] = [["Theology", "Math", "English", "Chemistry", "FREE TIME", "GYM"],["Math", "FREE TIME", "GYM", "English", "Chemistry", "Theology"]];
   studentschedule[1] = [["Biology", "Chinese", "FREE TIME", "Math", "Theology", "GYM"],["Math", "FREE TIME", "Theology", "Biology", "Chinese","GYM"]];
 
+  //Grade book setup
   gradebook = ["Language", "Math", "Science", "Theology", "GYM"];
   studentgrade[0] = [80, 75, 78, 83, 90];
   studentgrade[1] = [76, 83, 90, 80, 87];
@@ -104,6 +110,7 @@ function initialscreen() {
   textAlign(CENTER);
   text("Welcome to the student hand book System!", width/2, (height/2) - (barwidth/2) - 20);
   text("Still loading......", width/2, (height/2) + (barwidth/2) + 20);
+  text("Notice: Using the button 1 & 2 to change Student!", width/2, height - 300);
 }
 
 //========================== BUTTON ===================================//
@@ -138,7 +145,7 @@ function keyPressed() {
     newTimer.start();
     background(0);
     currentstu = 0;
-    drawfunction = makeHome;
+    drawfunction = makeHome; //Initial with Home screen
   }
   else if (key === '2') {
     newTimer.start();
@@ -185,11 +192,24 @@ function gotoState(statename) {
 }
 
 //==================== STATE FUNCTION ===================//
-var text_y = 140;
+var text_y = 140; //The text box location (y&x)
 var text_x = 340;
 
 makeHome = function() {
   background(187,255,255);
+  push();
+  // create the background PNG
+  tint(255, 127);
+  imageMode(CENTER);
+  image(studentprofile[currentstu][6],width/2,height/2, height,height);
+
+  //Create the text-back rect
+  rectMode(RADIUS);
+  strokeWeight(3);
+  stroke(0,255,0);
+  rect(width/2,height/2, width/2 - 100, 100, 20);
+  pop();
+
   textSize(36);
   fill(144,238,144);
   text("Welcome to the " + studentprofile[currentstu][0] + "'s hand book system!", width/2, height/2 - 20);
@@ -198,8 +218,12 @@ makeHome = function() {
 
 makeProfile = function() {
   background(10,80,120);
-
   maketitle("Profile");
+  fill(255);
+  strokeWeight(5);
+  rect(text_x-5,text_y-20,300,300);//Background
+
+  //Profile Text
   push();
   textAlign(LEFT);
   textSize(30);
@@ -237,9 +261,11 @@ makeSchedule = function() {
   textSize(30);
   text("Today", text_x + 10 + (600 * (1/3)), text_y + 20);
   text("Tomorrow", text_x + 10 + (600 * (2/3)), text_y + 20);
+
   for (let index = 0; index <= studentschedule[currentstu][0].length + 2; index++) {
     let schedulex = text_x;
     let scheduley = text_y + 80 + (50 * index);
+    //Create schedule by time with classnumber(index)
     switch (index) {
       case 0:
         text("8:00 ~ 8:40", schedulex, scheduley);
@@ -309,11 +335,13 @@ makeGrade = function() {
   fill(255,165,0);
   text("Current Grade in each subject:", text_x,text_y);
   fill(0);
-  for (let index = 0; index < gradebook.length; index++) {
-    text(gradebook[index], text_x, text_y + 50 * (index + 1));
-    fill(255,0,0);
-    text(studentgrade[currentstu][index], text_x + text_x, text_y + 50 * (index + 1));
 
+  //Create the grading subject and text
+  for (let index = 0; index < gradebook.length; index++) {
+    text(gradebook[index], text_x, text_y + 50 * (index + 1));//Subject
+    fill(255,0,0);
+    text(studentgrade[currentstu][index], text_x + text_x, text_y + 50 * (index + 1));//Grade
+    //Use the ABCD(F) as grade, too
     if(studentgrade[currentstu][index] >= 90) text("A", text_x + text_x + 50, text_y + 50 * (index + 1));
     else if(studentgrade[currentstu][index] >= 80) text("B", text_x + text_x + 50, text_y + 50 * (index + 1));
     else if(studentgrade[currentstu][index] >= 70) text("C", text_x + text_x + 50, text_y + 50 * (index + 1));
@@ -323,7 +351,7 @@ makeGrade = function() {
 
     push();
     stroke(0);
-    line(text_x-5,text_y + 50 * (index + 1)+ 25, text_x-5 + 600, text_y + 50 * (index + 1)+ 25);
+    line(text_x-5,text_y + 50 * (index + 1)+ 25, text_x-5 + 600, text_y + 50 * (index + 1)+ 25);//Line between the subject
     pop();
   }
   
@@ -331,12 +359,20 @@ makeGrade = function() {
 
 function maketitle(title) {
   push();
+  //Title
   textSize(36);
   fill(255);
   textAlign(LEFT);
   text("Student's "+title, 25, 105);
 
-  //image
+  //Backgroung PNG
+  push();
+  tint(255, 127);
+  imageMode(CENTER);
+  image(studentprofile[currentstu][6],width/2,height/2, height,height);
+  pop();
+
+  //Image
   strokeWeight(2);
   rect(24,119,303,303);
   strokeWeight(0);

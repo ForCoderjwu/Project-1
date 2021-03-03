@@ -12,5 +12,11 @@ and clickable buttom.
 
 -Using the timer to build the progress bar (Base on the Timer/progressbar practice)  
 -Using the clickable buttom to build the navigation bar  
--Using the 1/2 button to change students  
--More function...  
+-Using the 1&2 button to change students  
+-Using the PNG file for each student's profile and background image  
+-Using center drawing function for each state.  
+-Have different 4 state for each students(2).  
+
+### Note:
+
+Using the button to change page, and using the 1 and 2 button to change students! 
