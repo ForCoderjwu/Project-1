@@ -25,11 +25,11 @@ function setup() {
   newTimer = new Timer(5000); //Timer 5s
   drawfunction = makeHome;//Initial the home page
 
-  //Make up the Button
+  //Make up the Button(name,x,y)
   textButton[0] = makeTextButton("Home", 20, buttonY);
-  textButton[1] = makeTextButton("Personal Information", 20 + 200*1, buttonY);
-  textButton[2] = makeTextButton("Class Schedule", 20 + 200*2, buttonY);
-  textButton[3] = makeTextButton("Grade book", 20 + 200*3, buttonY);
+  textButton[1] = makeTextButton("Personal Information", 20 + 300*1, buttonY);
+  textButton[2] = makeTextButton("Class Schedule", 20 + 300*2, buttonY);
+  textButton[3] = makeTextButton("Grade book", 20 + 300*3, buttonY);
 
   currentstu = 0;
   stringinput();
@@ -120,17 +120,20 @@ function makeTextButton(label, x, y) {
   let tb  = new Clickable();
   
   // set the tb's text
+  tb.textSize = 18;
   tb.text = label;
 
   // set width + height
-  tb.width = 150;
-  tb.height = 30;
+  tb.width = 200;
+  tb.height = 70;
 
   // set to middle of screen
   tb.locate( x, y );
 
+  //set the original color
+  tb.color = "#EEB422";
+
   // Clickable callback function for when it is pressed
-  // On this example we use the SAME callback for all of the functions
   tb.onPress = textButtonPressed;
   tb.onHover = textButtonOnHover;
   tb.onOutside = textButtonOnOutside;
@@ -170,7 +173,7 @@ textButtonOnHover = function () {
 
 // return to normal when it is outside
 textButtonOnOutside = function () {
-  this.color = "#FFFFFF";
+  this.color = "#EEB422";
   this.textColor = "#000000";
 }
 
@@ -204,6 +207,7 @@ makeHome = function() {
   image(studentprofile[currentstu][6],width/2,height/2, height,height);
 
   //Create the text-back rect
+  fill(0);
   rectMode(RADIUS);
   strokeWeight(3);
   stroke(0,255,0);
